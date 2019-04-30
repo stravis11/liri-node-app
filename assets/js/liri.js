@@ -24,7 +24,7 @@ if (nodeArg[2] === "concert-this") {
       console.log("Accessing Bands In Town API...");
       console.log(`Upcoming concerts for ${artist}: `);
       response.data.forEach(event => {
-        console.log("====================================");
+        console.log("------------------------------------");
         console.log(`Venue: ${event.venue.name}`);
         console.log(`Location: ${event.venue.city}, ${event.venue.country}`);
         console.log(
@@ -39,12 +39,19 @@ if (nodeArg[2] === "concert-this") {
   // spotify-this-song command using Spotify API
 } else if (nodeArg[2] === "spotify-this-song") {
   var song = nodeArg[3];
+  if (!song) song = "The Sign by Ace of Base";
   console.log("Accessing Spotify API...");
-  spotify.search({ type: "track", query: `${song}` }, function(err, data) {
-    if (err) {
-      return console.log("Error occurred: " + err);
-    }
+  spotify.search(
+    { type: "track", query: `${song}`, market: "US", limit: 1 },
+    function(err, data) {
+      if (err) {
+        return console.log("Error occurred: " + err);
+      }
 
-    console.log(data);
-  });
+      console.log("Artist: " + data.tracks.items[0].artists[0].name);
+      console.log("Song: " + data.tracks.items[0].name);
+      console.log("Preview: " + data.tracks.items[0].external_urls.spotify);
+      console.log("Album: " + data.tracks.items[0].album.name);
+    }
+  );
 }
