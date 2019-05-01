@@ -8,8 +8,8 @@ LIRI Bot To Do
     [X] create randmon.txt file (see instructions for contents)
     [X] create liri.js file (see instructions for contents)
     [ ] make is so liri.js can take in the following commands:
-        [ ] concert-this
-        [ ] spotify-this-song
+        [X] concert-this
+        [X] spotify-this-song
         [ ] movie-this
         [ ] do-what-it-says
     [ ] Create screenshots, a GIF or video of app working with no bugs. Include in README.md file.
