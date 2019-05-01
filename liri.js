@@ -5,7 +5,6 @@ const keys = require("./keys.js");
 const spotify = new Spotify(keys.spotify);
 const command = process.argv[2];
 const data = process.argv.slice(3);
-
 const moment = require("moment");
 const fs = require("fs");
 
@@ -29,7 +28,7 @@ function concertThis() {
         console.log(`Venue: ${event.venue.name}`);
         console.log(`Location: ${event.venue.city}, ${event.venue.country}`);
         console.log(
-          "Conecrt Date: ",
+          "Concert Date: ",
           moment(event.datetime).format("MM/DD/YYYY")
         );
       });
@@ -40,8 +39,7 @@ function concertThis() {
 }
 
 // spotify-this-song function using Spotify API
-function spotifySong() {
-  var song = data;
+function spotifySongs(song) {
   if (!song) song = "The Sign by Ace of Base";
   console.log("Accessing Spotify API...");
   spotify
@@ -86,11 +84,12 @@ function movieThis() {
 // do-what-it-says function using fs
 function doWhatItSays() {
   console.log("Accessing random.txt file...");
-  fs.readFile("random.txt", "utf8", (err, data) => {
+  fs.readFile("random.txt", "utf8", (err, textFile) => {
     if (err) {
       console.log(`Error occurred: ${err}`);
     }
-    console.log(data);
+    let input = textFile.split(",")[1];
+    spotifySongs(input);
   });
 }
 
@@ -98,7 +97,7 @@ function userInput(command, data) {
   if (command === "concert-this") {
     concertThis(data);
   } else if (command === "spotify-this-song") {
-    spotifySong(data);
+    spotifySongs(data);
   } else if (command === "movie-this") {
     movieThis(data);
   } else if (command === "do-what-it-says") {
