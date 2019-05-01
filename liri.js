@@ -1,14 +1,17 @@
 require("dotenv").config();
-var axios = require("axios");
-var Spotify = require("node-spotify-api");
-var keys = require("./keys.js");
-var spotify = new Spotify(keys.spotify);
-var nodeArg = process.argv;
-var moment = require("moment");
+const axios = require("axios");
+const Spotify = require("node-spotify-api");
+const keys = require("./keys.js");
+const spotify = new Spotify(keys.spotify);
+const command = process.argv[2];
+const data = process.argv.slice(3);
 
-// concert-this command using Bands In Town API
-if (nodeArg[2] === "concert-this") {
-  var artist = nodeArg[3];
+const moment = require("moment");
+const fs = require("fs");
+
+// concert-this function using Bands In Town API
+function concertThis() {
+  var artist = data;
   var queryUrl = `https://rest.bandsintown.com/artists/${artist}/events?app_id=codingbootcamp`;
   console.log(queryUrl);
   axios
@@ -34,10 +37,11 @@ if (nodeArg[2] === "concert-this") {
     .catch(err => {
       console.log(`Error occurred: ${err}`);
     });
+}
 
-  // spotify-this-song command using Spotify API
-} else if (nodeArg[2] === "spotify-this-song") {
-  var song = nodeArg[3];
+// spotify-this-song function using Spotify API
+function spotifySong() {
+  var song = data;
   if (!song) song = "The Sign by Ace of Base";
   console.log("Accessing Spotify API...");
   spotify
@@ -51,10 +55,11 @@ if (nodeArg[2] === "concert-this") {
     .catch(err => {
       console.log(`Error occurred: ${err}`);
     });
+}
 
-  // movie-this command using IMDB API
-} else if (nodeArg[2] === "movie-this") {
-  var movieName = nodeArg[3];
+// movie-this function using IMDB API
+function movieThis() {
+  var movieName = data;
   if (movieName === undefined) {
     movieName = "Mr Nobody";
   }
@@ -77,3 +82,31 @@ if (nodeArg[2] === "concert-this") {
       console.log(`Error occurred: ${err}`);
     });
 }
+
+// do-what-it-says function using fs
+function doWhatItSays() {
+  console.log("Accessing random.txt file...");
+  fs.readFile("random.txt", "utf8", (err, data) => {
+    if (err) {
+      console.log(`Error occurred: ${err}`);
+    }
+    console.log(data);
+  });
+}
+
+function userInput(command, data) {
+  if (command === "concert-this") {
+    concertThis(data);
+  } else if (command === "spotify-this-song") {
+    spotifySong(data);
+  } else if (command === "movie-this") {
+    movieThis(data);
+  } else if (command === "do-what-it-says") {
+    doWhatItSays(data);
+  } else {
+    console.log(
+      "Invlaid command. Please use concert-this, spotify-this-song, movie-this, or do-what-it-says"
+    );
+  }
+}
+userInput(command, data);

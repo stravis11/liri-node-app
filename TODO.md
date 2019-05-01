@@ -10,7 +10,7 @@ LIRI Bot To Do
     [ ] make is so liri.js can take in the following commands:
         [X] concert-this
         [X] spotify-this-song
-        [ ] movie-this
+        [X] movie-this
         [ ] do-what-it-says
     [ ] Create screenshots, a GIF or video of app working with no bugs. Include in README.md file.
     [ ] Submit Github repo
