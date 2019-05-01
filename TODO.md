@@ -11,9 +11,9 @@ LIRI Bot To Do
         [X] concert-this
         [X] spotify-this-song
         [X] movie-this
-        [ ] do-what-it-says
+        [X] do-what-it-says
     [ ] Create screenshots, a GIF or video of app working with no bugs. Include in README.md file.
-    [ ] Submit Github repo
+    [X] Submit Github repo
 
 BONUS
 

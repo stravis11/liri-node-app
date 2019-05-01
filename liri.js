@@ -9,10 +9,8 @@ const moment = require("moment");
 const fs = require("fs");
 
 // concert-this function using Bands In Town API
-function concertThis() {
-  var artist = data;
+function concertThis(artist) {
   var queryUrl = `https://rest.bandsintown.com/artists/${artist}/events?app_id=codingbootcamp`;
-  console.log(queryUrl);
   axios
     .get(queryUrl)
     .then(response => {
@@ -40,15 +38,42 @@ function concertThis() {
 
 // spotify-this-song function using Spotify API
 function spotifySongs(song) {
-  if (!song) song = "The Sign by Ace of Base";
+  if (song.length == 0) song = "The Sign by Ace of Base";
   console.log("Accessing Spotify API...");
   spotify
     .search({ type: "track", query: `${song}` })
     .then(data => {
       console.log(`Artist: ${data.tracks.items[0].artists[0].name}`);
+      fs.appendFile(
+        "log.txt",
+        `Artist: ${data.tracks.items[0].artists[0].name}\n`,
+        err => {
+          if (err) throw err;
+        }
+      );
       console.log(`Song: ${data.tracks.items[0].name}`);
+      fs.appendFile("log.txt", `Song: ${data.tracks.items[0].name}\n`, err => {
+        if (err) throw err;
+      });
       console.log(`Preview URL: ${data.tracks.items[0].external_urls.spotify}`);
+      fs.appendFile(
+        "log.txt",
+        `Preview URL: ${data.tracks.items[0].external_urls.spotify}\n`,
+        err => {
+          if (err) throw err;
+        }
+      );
       console.log(`Album: ${data.tracks.items[0].album.name}`);
+      fs.appendFile(
+        "log.txt",
+        `Album: ${data.tracks.items[0].album.name}\n`,
+        err => {
+          if (err) throw err;
+          fs.appendFile("log.txt", "--------------------\n", err => {
+            if (err) throw err;
+          });
+        }
+      );
     })
     .catch(err => {
       console.log(`Error occurred: ${err}`);
@@ -56,11 +81,8 @@ function spotifySongs(song) {
 }
 
 // movie-this function using IMDB API
-function movieThis() {
-  var movieName = data;
-  if (movieName === undefined) {
-    movieName = "Mr Nobody";
-  }
+function movieThis(movieName) {
+  if (movieName.length == 0) movieName = "Mr Nobody";
   var queryUrl = `http://www.omdbapi.com/?t=${movieName}&y=&plot=full&tomatoes=true&apikey=trilogy`;
   console.log("Accessing OMDB API...");
   axios
@@ -101,10 +123,10 @@ function userInput(command, data) {
   } else if (command === "movie-this") {
     movieThis(data);
   } else if (command === "do-what-it-says") {
-    doWhatItSays(data);
+    doWhatItSays();
   } else {
     console.log(
-      "Invlaid command. Please use concert-this, spotify-this-song, movie-this, or do-what-it-says"
+      "Invalid command. Please use concert-this, spotify-this-song, movie-this, or do-what-it-says"
     );
   }
 }
