@@ -17,6 +17,7 @@ function concertThis(artist) {
       var bandData = response.data;
       if (!bandData.length) {
         console.log(`No results found for ${artist}`);
+        fs.appendFile("log.txt");
         return;
       }
       console.log("Accessing Bands In Town API...");
@@ -35,52 +36,34 @@ function concertThis(artist) {
       console.log(`Error occurred: ${err}`);
     });
 }
+// Function to write output data to log.txt
+function logData(data) {
+  fs.appendFile("log.txt", data, err => {
+    if (err) throw err;
+  });
+}
 
-// spotify-this-song function using Spotify API
+// spotify-this-song function
 function spotifySongs(song) {
   if (song.length == 0) song = "The Sign by Ace of Base";
   console.log("Accessing Spotify API...");
   spotify
     .search({ type: "track", query: `${song}` })
     .then(data => {
-      console.log(`Artist: ${data.tracks.items[0].artists[0].name}`);
-      fs.appendFile(
-        "log.txt",
-        `Artist: ${data.tracks.items[0].artists[0].name}\n`,
-        err => {
-          if (err) throw err;
-        }
-      );
-      console.log(`Song: ${data.tracks.items[0].name}`);
-      fs.appendFile("log.txt", `Song: ${data.tracks.items[0].name}\n`, err => {
-        if (err) throw err;
-      });
-      console.log(`Preview URL: ${data.tracks.items[0].external_urls.spotify}`);
-      fs.appendFile(
-        "log.txt",
-        `Preview URL: ${data.tracks.items[0].external_urls.spotify}\n`,
-        err => {
-          if (err) throw err;
-        }
-      );
-      console.log(`Album: ${data.tracks.items[0].album.name}`);
-      fs.appendFile(
-        "log.txt",
-        `Album: ${data.tracks.items[0].album.name}\n`,
-        err => {
-          if (err) throw err;
-          fs.appendFile("log.txt", "--------------------\n", err => {
-            if (err) throw err;
-          });
-        }
-      );
+      var artistName = data.tracks.items[0].artists[0].name;
+      var songName = data.tracks.items[0].name;
+      var prevUrl = data.tracks.items[0].external_urls.spotify;
+      var albumName = data.tracks.items[0].album.name;
+      output = `-------------------------------\r\nArtist: ${artistName}\r\nSong: ${songName}\r\nPreview URL: ${prevUrl}\r\nAlbum: ${albumName}\r\n`;
+      console.log(output);
+      logData(output);
     })
     .catch(err => {
       console.log(`Error occurred: ${err}`);
     });
 }
 
-// movie-this function using IMDB API
+// movie-this function
 function movieThis(movieName) {
   if (movieName.length == 0) movieName = "Mr Nobody";
   var queryUrl = `http://www.omdbapi.com/?t=${movieName}&y=&plot=full&tomatoes=true&apikey=trilogy`;
