@@ -17,19 +17,21 @@ function concertThis(artist) {
       var bandData = response.data;
       if (!bandData.length) {
         console.log(`No results found for ${artist}`);
-        fs.appendFile("log.txt");
         return;
       }
       console.log("Accessing Bands In Town API...");
-      console.log(`Upcoming concerts for ${artist}: `);
+      console.log(`Upcoming concerts for ${artist}`);
+      logData(`Upcoming concerts for ${artist}\r\n`);
       response.data.forEach(event => {
+        concertDate = moment(event.datetime).format("MM/DD/YYYY");
         console.log("------------------------------------");
+        logData(`------------------------------------\r\n`);
         console.log(`Venue: ${event.venue.name}`);
+        logData(`Venue: ${event.venue.name}\r\n`);
         console.log(`Location: ${event.venue.city}, ${event.venue.country}`);
-        console.log(
-          "Concert Date: ",
-          moment(event.datetime).format("MM/DD/YYYY")
-        );
+        logData(`Location: ${event.venue.city}, ${event.venue.country}\r\n`);
+        console.log(`Concert Date: ${concertDate}`);
+        logData(`Concert Date: ${concertDate}\r\n`);
       });
     })
     .catch(err => {
@@ -38,7 +40,7 @@ function concertThis(artist) {
 }
 // Function to write output data to log.txt
 function logData(data) {
-  fs.appendFile("log.txt", data, err => {
+  fs.appendFileSync("log.txt", data, err => {
     if (err) throw err;
   });
 }
@@ -54,7 +56,7 @@ function spotifySongs(song) {
       var songName = data.tracks.items[0].name;
       var prevUrl = data.tracks.items[0].external_urls.spotify;
       var albumName = data.tracks.items[0].album.name;
-      output = `-------------------------------\r\nArtist: ${artistName}\r\nSong: ${songName}\r\nPreview URL: ${prevUrl}\r\nAlbum: ${albumName}\r\n`;
+      output = `------------------------------------\r\nArtist: ${artistName}\r\nSong: ${songName}\r\nPreview URL: ${prevUrl}\r\nAlbum: ${albumName}\r\n`;
       console.log(output);
       logData(output);
     })
