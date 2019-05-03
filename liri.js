@@ -38,12 +38,6 @@ function concertThis(artist) {
       console.log(`Error occurred: ${err}`);
     });
 }
-// Function to write output data to log.txt
-function logData(data) {
-  fs.appendFileSync("log.txt", data, err => {
-    if (err) throw err;
-  });
-}
 
 // spotify-this-song function
 function spotifySongs(song) {
@@ -52,10 +46,10 @@ function spotifySongs(song) {
   spotify
     .search({ type: "track", query: `${song}` })
     .then(data => {
-      var artistName = data.tracks.items[0].artists[0].name;
-      var songName = data.tracks.items[0].name;
-      var prevUrl = data.tracks.items[0].external_urls.spotify;
-      var albumName = data.tracks.items[0].album.name;
+      artistName = data.tracks.items[0].artists[0].name;
+      songName = data.tracks.items[0].name;
+      prevUrl = data.tracks.items[0].external_urls.spotify;
+      albumName = data.tracks.items[0].album.name;
       output = `------------------------------------\r\nArtist: ${artistName}\r\nSong: ${songName}\r\nPreview URL: ${prevUrl}\r\nAlbum: ${albumName}\r\n`;
       console.log(output);
       logData(output);
@@ -73,22 +67,25 @@ function movieThis(movieName) {
   axios
     .get(queryUrl)
     .then(movieData => {
-      console.log(`Title: ${movieData.data.Title}`);
-      console.log(`Year: ${movieData.data.Year}`);
-      console.log(`Rated: ${movieData.data.Rated}`);
-      console.log(`IMDB Rating: ${movieData.data.Ratings[0].Value}`);
-      console.log(`Rotten Tomato Rating: ${movieData.data.Ratings[1].Value}`);
-      console.log(`Production Country: ${movieData.data.Country}`);
-      console.log(`Language: ${movieData.data.Language}`);
-      console.log(`Plot: ${movieData.data.Plot}`);
-      console.log(`Actors: ${movieData.data.Actors}`);
+      title = movieData.data.Title;
+      year = movieData.data.Year;
+      rated = movieData.data.Rated;
+      imdbRating = movieData.data.Ratings[0].Value;
+      rottenRating = movieData.data.Ratings[1].Value;
+      country = movieData.data.Country;
+      language = movieData.data.Language;
+      plot = movieData.data.Plot;
+      actors = movieData.data.Actors;
+      output = `------------------------------------\r\nTitle: ${title}\r\nYear: ${year}\r\nRated: ${rated}\r\nIMDB Rating: ${imdbRating}\r\nRotten Tomato Rating: ${rottenRating}\r\nCountry: ${country}\r\nLanguage: ${language}\r\nPlot: ${plot}\r\nActors: ${actors}\r\n`;
+      console.log(output);
+      logData(output);
     })
     .catch(err => {
       console.log(`Error occurred: ${err}`);
     });
 }
 
-// do-what-it-says function using fs
+// do-what-it-says function
 function doWhatItSays() {
   console.log("Accessing random.txt file...");
   fs.readFile("random.txt", "utf8", (err, textFile) => {
@@ -100,6 +97,14 @@ function doWhatItSays() {
   });
 }
 
+// Function to write output data to log.txt
+function logData(data) {
+  fs.appendFileSync("log.txt", data, err => {
+    if (err) throw err;
+  });
+}
+
+// Command function
 function userInput(command, data) {
   if (command === "concert-this") {
     concertThis(data);
