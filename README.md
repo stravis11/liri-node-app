@@ -1,2 +1,35 @@
 # liri-node-app
-LIRI Bot searches Spotify for songs, bands in town for concerts, and OMDB movies.
+
+LIRI searches Spotify for songs, Bands In Town for concerts, and OMDB for movies.
+
+Liri is a node application. To install the necessary npm packages, cd into the folder and then run:
+
+```
+npm install
+
+```
+
+# Commands to run LIRI
+
+```
+node liri.js concert-this '<band/artist name here>'
+node liri.js spotify-this-song '<song name here>'
+node liri.js movie-this '<movie name here>'
+node liri.js do-what-it-says
+```
+
+The do-what-it-says commands reads and executes the command listed in the random.txt file.
+
+LIRI will log all output to the log.txt file.
+
+Video of LIRI working: [LIRI Video Demo](https://youtu.be/8l5SeazBDlw)
+GitHub Repo: https://github.com/stravis11/liri-node-app
+
+# Technologies Used
+
+- JavaScript
+- node.js
+- Axios
+- Spotify API
+- Bands In Town API
+- OMDB API
