@@ -92,8 +92,19 @@ function doWhatItSays() {
     if (err) {
       console.log(`Error occurred: ${err}`);
     }
+    let command = textFile.split(",")[0];
     let input = textFile.split(",")[1];
-    spotifySongs(input);
+    if (command == "spotify-this-song") {
+      spotifySongs(input);
+    } else if (command == "movie-this") {
+      movieThis(input);
+    } else if (command == "concert-this") {
+      concertThis(input);
+    } else {
+      console.log(
+        "Invalid command. Please use concert-this, spotify-this-song, or movie-this in random.txt"
+      );
+    }
   });
 }
 
