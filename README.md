@@ -9,6 +9,15 @@ npm install
 
 ```
 
+Create a file named .env, add the following to it, replacing the values with your Spotify API keys:
+
+```
+# Spotify API keys
+
+SPOTIFY_ID=your-spotify-id
+SPOTIFY_SECRET=your-spotify-secret
+```
+
 # Commands to run LIRI
 
 ```
