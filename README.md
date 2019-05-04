@@ -22,6 +22,8 @@ The do-what-it-says commands reads and executes the command listed in the random
 
 LIRI will log all output to the log.txt file.
 
+![](liri.gif)
+
 Video of LIRI working: [LIRI Video Demo](https://youtu.be/8l5SeazBDlw)
 
 GitHub Repo: https://github.com/stravis11/liri-node-app
