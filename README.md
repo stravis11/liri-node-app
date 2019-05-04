@@ -24,7 +24,7 @@ LIRI will log all output to the log.txt file.
 
 ![](liri.gif)
 
-Video of LIRI working: [LIRI Video Demo](https://youtu.be/8l5SeazBDlw)
+Video of LIRI working: [LIRI Video Demo](https://youtu.be/P59XWLEYJZg)
 
 GitHub Repo: https://github.com/stravis11/liri-node-app
 
